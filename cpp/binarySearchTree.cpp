@@ -2,68 +2,74 @@
 
 struct BST {
     public:
-        BST() : root(nullptr), size(0) {}
+        BST() {
+            this->root = nullptr;
+            this->size = 0;
+        }
 
         bool isEmpty() const {
-            return !root;
+            return !this->root;
         }
 
         bool find(int value) const {
-            return searchUtil(root, value);
+            return searchUtil(this->root, value);
         }
 
         void insert(int value) {
             if (!find(value)) {
-                root = insertUtil(root, value);
+                this->root = insertUtil(this->root, value);
                 size++;
             }
         }
 
         void remove(int value) {
             if (find(value)) {
-                root = removeUtil(root, value);
+                this->root = removeUtil(this->root, value);
                 size--;
             }
         }
 
         void traverseInOrder() const {
-            inOrder(root);
+            inOrder(this->root);
         }
 
         void traversePreOrder() const {
-            preOrder(root);
+            preOrder(this->root);
         }
 
         void traversePostOrder() const {
-            postOrder(root);
+            postOrder(this->root);
         }
 
     private:
         struct Node {
             int key;
             Node *left, *right;
-            Node(int k) : key(k), left(nullptr), right(nullptr) {}
+            Node(int k) {
+                this->key = k;
+                this->left = this->right = nullptr;
+            }
         };
 
         Node *root;
         unsigned int size;
 
-        Node* searchUtil(Node *root, int value) const {
-            while (root) {
-                if (value < root->key) root = root->left;
-                else if (value > root->key) root = root->right;
-                else return root;
+        Node* searchUtil(Node *node, int value) const {
+            while (node) {
+                if (value < node->key) node = node->left;
+                else if (value > node->key) node = node->right;
+                else return node;
             }
             return nullptr;
         }
 
-        Node* insertUtil(Node *root, int value) {
-            if (!root) return new Node(value);
+        Node* insertUtil(Node *node, int value) {
+            if (!node) return new Node(value);
 
-            if (value < root->key) root->left = insertUtil(root->left, value);
-            else if (value > root->key) root->right = insertUtil(root->right, value);
+            if (value < node->key) node->left = insertUtil(node->left, value);
+            else if (value > node->key) node->right = insertUtil(node->right, value);
 
-            return root;
+            return node;
         }
 
         Node* findMinNode(Node *node) const {
@@ -73,51 +79,51 @@ struct BST {
             return currNode;
         }
 
-        Node* removeUtil(Node *root, int value) {
-            if (!root) return nullptr;
+        Node* removeUtil(Node *node, int value) {
+            if (!node) return nullptr;
 
-            if (value > root->key) root->right = removeUtil(root->right, value);
-            else if (value < root->key) root->left = removeUtil(root->left, value);
+            if (value > node->key) node->right = removeUtil(node->right, value);
+            else if (value < node->key) node->left = removeUtil(node->left, value);
             else {
-                if (!root->left) {
-                    Node *rightChild = root->right;
-                    delete root;
+                if (!node->left) {
+                    Node *rightChild = node->right;
+                    delete node;
                     return rightChild;
                 }
-                else if (!root->right) {
-                    Node *leftChild = root->left;
-                    delete root;
+                else if (!node->right) {
+                    Node *leftChild = node->left;
+                    delete node;
                     return leftChild;
                 }
 
-                Node *temp = findMinNode(root->right);
-                root->key = temp->key;
-                root->right = removeUtil(root->right, temp->key);
+                Node *temp = findMinNode(node->right);
+                node->key = temp->key;
+                node->right = removeUtil(node->right, temp->key);
             }
-            return root;
+            return node;
         }
 
-        void inOrder(Node *root) const {
-            if (root) {
-                inOrder(root->left);
-                std::cout << root->key << " ";
-                inOrder(root->right);
-            }
-        }
-
-        void postOrder(Node *root) const {
-            if (root) {
-                postOrder(root->left);
-                postOrder(root->right);
-                std::cout << root->key << " ";
+        void inOrder(Node *node) const {
+            if (node) {
+                inOrder(node->left);
+                std::cout << node->key << " ";
+                inOrder(node->right);
             }
         }
 
-        void preOrder(Node *root) const {
-            if (root) {
-                std::cout << root->key << " ";
-                preOrder(root->left);
-                preOrder(root->right);
+        void postOrder(Node *node) const {
+            if (node) {
+                postOrder(node->left);
+                postOrder(node->right);
+                std::cout << node->key << " ";
+            }
+        }
+
+        void preOrder(Node *node) const {
+            if (node) {
+                std::cout << node->key << " ";
+                preOrder(node->left);
+                preOrder(node->right);
             }
         }
 };

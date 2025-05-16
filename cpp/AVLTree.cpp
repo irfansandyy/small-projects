@@ -2,40 +2,43 @@
 
 struct AVL {
     public:
-        AVL() : root(nullptr), size(0) {}
+        AVL() {
+            this->root = nullptr;
+            this->size = 0;
+        }
 
         bool isEmpty() const {
-            return !root;
+            return !this->root;
         }
 
         bool find(int value) const {
-            return searchUtil(root, value);
+            return searchUtil(this->root, value);
         }
 
         void insert(int value) {
             if (!find(value)) {
-                root = insertUtil(root, value);
+                this->root = insertUtil(this->root, value);
                 size++;
             }
         }
 
         void remove(int value) {
             if (find(value)) {
-                root = removeUtil(root, value);
+                this->root = removeUtil(this->root, value);
                 size--;
             }
         }
 
         void traverseInOrder() const {
-            inOrder(root);
+            inOrder(this->root);
         }
 
         void traversePreOrder() const {
-            preOrder(root);
+            preOrder(this->root);
         }
 
         void traversePostOrder() const {
-            postOrder(root);
+            postOrder(this->root);
         }
     
     private:
@@ -43,17 +46,21 @@ struct AVL {
             int data;
             int height;
             Node *left, *right;
-            Node(int d) : data(d), height(1), left(nullptr), right(nullptr) {}
+            Node(int d) {
+                this->data = d;
+                this->height = 1;
+                this->left = this->right = nullptr;
+            }
         };
 
         Node *root;
         unsigned size;
 
-        Node* searchUtil(Node *root, int value) const {
-            while (root) {
-                if (value < root->data) root = root->left;
-                else if (value > root->data) root = root->right;
-                else return root;
+        Node* searchUtil(Node *node, int value) const {
+            while (node) {
+                if (value < node->data) node = node->left;
+                else if (value > node->data) node = node->right;
+                else return node;
             }
             return nullptr;
         }
@@ -183,27 +190,27 @@ struct AVL {
             return node;
         }
 
-        void inOrder(Node *root) const {
-            if (root) {
-                inOrder(root->left);
-                std::cout << root->data << " ";
-                inOrder(root->right);
+        void inOrder(Node *node) const {
+            if (node) {
+                inOrder(node->left);
+                std::cout << node->data << " ";
+                inOrder(node->right);
             }
         }
 
-        void postOrder(Node *root) const {
-            if (root) {
-                postOrder(root->left);
-                postOrder(root->right);
-                std::cout << root->data << " ";
+        void postOrder(Node *node) const {
+            if (node) {
+                postOrder(node->left);
+                postOrder(node->right);
+                std::cout << node->data << " ";
             }
         }
 
-        void preOrder(Node *root) const {
-            if (root) {
-                std::cout << root->data << " ";
-                preOrder(root->left);
-                preOrder(root->right);
+        void preOrder(Node *node) const {
+            if (node) {
+                std::cout << node->data << " ";
+                preOrder(node->left);
+                preOrder(node->right);
             }
         }
 };
