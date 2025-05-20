@@ -1,0 +1,114 @@
+% !TEX root = /home/sandy/code/small-projects/random-code/nyoba.tex
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{lipsum} % untuk dummy text
+
+\geometry{margin=3cm}
+
+\title{Laporan Proyek Akhir}
+\author{Mochammad Irfan Sandy}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\chapter{Pendahuluan}
+
+\section{Latar Belakang}
+\lipsum[1]
+
+\section{Rumusan Masalah}
+\begin{itemize}
+    \item Bagaimana cara merancang sistem distribusi pesan menggunakan load balancer?
+    \item Bagaimana efektivitas metode round-robin dalam pembagian beban kerja?
+\end{itemize}
+
+\section{Tujuan Penelitian}
+\lipsum[2]
+
+\chapter{Tinjauan Pustaka}
+
+\section{Load Balancer}
+Load balancer adalah komponen penting dalam sistem terdistribusi. Menurut \cite{tanenbaum2016}, load balancing bertujuan membagi beban secara merata.
+
+\section{Inter Process Communication (IPC)}
+Beberapa metode IPC:
+\begin{enumerate}
+    \item Message Queue
+    \item Shared Memory
+    \item Semaphore
+\end{enumerate}
+
+\chapter{Metodologi}
+
+\section{Arsitektur Sistem}
+Berikut adalah arsitektur sistem yang diusulkan.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{arsitektur.png}
+    \caption{Diagram arsitektur sistem}
+    \label{fig:arsitektur}
+\end{figure}
+
+\section{Desain Algoritma}
+Algoritma menggunakan metode round-robin:
+
+\begin{verbatim}
+current_worker = (current_worker + 1) % total_workers;
+send_message(current_worker, message);
+\end{verbatim}
+
+\chapter{Implementasi dan Hasil}
+
+\section{Lingkungan Implementasi}
+\begin{itemize}
+    \item Bahasa: C
+    \item OS: Linux Ubuntu 22.04
+    \item Komunikasi: IPC Message Queue
+\end{itemize}
+
+\section{Contoh Tabel Log}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+No & Waktu & Worker Tujuan \\ \hline
+1 & 10:00 & Worker 1 \\
+2 & 10:01 & Worker 2 \\
+3 & 10:02 & Worker 3 \\
+\hline
+\end{tabular}
+\caption{Log distribusi pesan}
+\label{tab:log}
+\end{table}
+
+\chapter{Kesimpulan dan Saran}
+
+\section{Kesimpulan}
+\lipsum[3]
+
+\section{Saran}
+\lipsum[4]
+
+\addcontentsline{toc}{chapter}{Daftar Pustaka}
+\begin{thebibliography}{9}
+\bibitem{tanenbaum2016}
+Andrew S. Tanenbaum and Maarten van Steen, \textit{Distributed Systems}, 3rd ed., Pearson, 2016.
+
+\bibitem{linuxipc}
+Michael Kerrisk, \textit{The Linux Programming Interface}, No Starch Press, 2010.
+\end{thebibliography}
+
+\end{document}
